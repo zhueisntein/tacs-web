@@ -1,0 +1,167 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@include file="/WEB-INF/views/taglib.jsp"%>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <title>信息认证</title>
+    <link rel="stylesheet" href="../../statics/css/reset.css">
+    <link rel="stylesheet" href="../../statics/css/style.css">
+    <script src="../../statics/js/jquery-1.11.0.min.js"></script>
+    <script src="../../statics/js/jquery.validate.min.js"></script>
+    <script src="../../statics/js/corporate/corp-register-validate.js"></script>
+    <script type="text/javascript" src="../../statics/js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<div class="nav">
+    <div class="container">
+        <h1>
+            <a href="javascript:;"><img src="../../statics/images/logo.png" alt=""></a>
+        </h1>
+        <a href="${ctx}/corporate/corporateLoginIndex.do" class="fr">返回首页</a>
+    </div>
+</div>
+<div class="container">
+    <div class="tit">
+        <h2>信息认证</h2>
+    </div>
+    <div class="pgsbar_legal">
+        <ul>
+            <li class="cur">
+                <em>1</em>
+                <h3>信息认证</h3>
+            </li>
+            <li>
+                <em>2</em>
+                <h3>创建用户</h3>
+            </li>
+            <li>
+                <em>3</em>
+                <h3>注册成功</h3>
+            </li>
+        </ul>
+    </div>
+    <form id="corporateAuthForm">
+        <ul class="logon_c cregist_c officer_form legal_form" style="width:790px; margin:auto; margin-bottom:20px;">
+            <li>
+                <span class="fl"><span class="colred">*</span>法定代表人身份所在地：</span>
+                <div class="fl seladstype">
+                    <label for="radio1"><input type="radio" name="adstype" id="radio1" checked>中国大陆</label>
+                    <label for="radio2"><input type="radio" name="adstype" id="radio2">港澳台</label>
+                    <label for="radio3"><input type="radio" name="adstype" id="radio3">海外其他</label>
+                </div>
+            </li>
+        </ul>
+        <div class="legalseltype cur">
+            <ul class="logon_c cregist_c officer_form legal_form">
+                <li>
+                    <span class="fl"><span class="colred">*</span>法人类型：</span>
+                    <div class="fl">
+                        <p style="padding-left:6px;">
+                            <select name="" id="corporateType" class="selist">
+                                <option value="企业法人">企业法人</option>
+                                <option value="社团">社团</option>
+                                <option value="中编办">中编办</option>
+                                <option value="民营机构">民营机构</option>
+                            </select>
+                        </p>
+                        <span class="warn frswarn"></span>
+                    </div>
+                </li>
+                <li>
+                    <span class="fl">企业名称：</span>
+                    <div class="fl">
+                        <p>
+                            <i class="qynameicon"></i>
+                            <input type="text" class="txt qyname" id="corporateName" name="corporateName"
+                                   placeholder="请输入企业名称">
+                            <em></em>
+                        </p>
+                        <span class="warn qynamewarn"></span>
+                    </div>
+                </li>
+                <li>
+                    <span class="fl">纳税人识别号统一代码：</span>
+                    <div class="fl">
+                        <p>
+                            <i class="zchicon"></i>
+                            <input type="text" class="txt registnum" id="certificateSno" name="certificateSno"
+                                   placeholder="请输入企业工商注册号/统一社会信用代码" maxlength="18">
+                            <em></em>
+                        </p>
+                        <span class="warn zchwarn"></span>
+                    </div>
+                </li>
+                <li>
+                    <span class="fl">法定代表人：</span>
+                    <div class="fl">
+                        <p>
+                            <i class="cardicon"></i>
+                            <input type="text" class="txt legalname" id="legalUserName" name="legalUserName"
+                                   placeholder="请输入姓名" maxlength="10">
+                            <em></em>
+                        </p>
+                        <span class="warn legalnamewarn"></span>
+                    </div>
+                </li>
+                <li>
+                    <span class="fl">法定代表人身份证号：</span>
+                    <div class="fl">
+                        <p>
+                            <i class="frcardicon"></i>
+                            <input type="text" class="txt frcard" placeholder="请输入证件照号码" id="legalUserCert"
+                                   name="legalUserCert" maxlength="18">
+                            <em></em>
+                        </p>
+                        <span class="warn frcardwarn"></span>
+                    </div>
+                </li>
+                <li>
+                    <span class="fl">身份证号有效日期：</span>
+                    <div class="fl">
+                            <div>
+                                <input class="Wdate" size="30" style="border: 1px solid #ccc; " align="center"  type="text" id="startDate" name="startDate" onclick="WdatePicker({firstDayOfWeek:1,dateFmt:'yyyy-MM-dd'})" placeholder="身份证有效开始日期："/>
+                                <input  class="Wdate" size="30"  style="border: 1px solid #ccc; float: right"  id="endDate" name="endDate" onclick="WdatePicker({firstDayOfWeek:1,dateFmt:'yyyy-MM-dd'})" placeholder="身份证有效结束日期："/>
+                            </div>
+                        <span class="warn dateError"></span>
+                    </div>
+                </li>
+            </ul>
+            <div class="legal_form_btm">
+                <p>
+                    <label for="agreexy"><input type="checkbox" id="agreexy" name="agreexy"> 我已阅读并同意<a
+                            href="javascript:;"
+                            class="ament">《注册协议》</a></label>
+                    <span class="warn agreexywarn"></span>
+                </p>
+                <a href="javascript:void(0);" class="loginbtn colblue" id="corporateAuthSubmit">下一步</a>
+            </div>
+        </div>
+    </form>
+    <div class="legalseltype legal_form_btm mt60">
+        <a href="legal_hkmt_artrz.html" class="loginbtn colblue">人工认证渠道</a>
+    </div>
+    <div class="legalseltype legal_form_btm mt60">
+        <a href="javascript:;" class="loginbtn colblue">人工认证渠道</a>
+    </div>
+</div>
+<div class="bottom"></div>
+<div class="agreement_shadow">
+    <div class="agreement">
+        <h2>
+            法人用户注册协议
+            <a href="javascript:;" class="close"></a>
+        </h2>
+        <div>
+            <p>
+                用户承诺对其发表或者上传于本站的所有信息(即属于《中华人民共和国著作权法》规定的作品，包括但不限于文字、图片、音乐、电影、表演和录音录像制品和电脑程序等)均享有完整的知识产权，或者已经得到相关权利人的合法授权；如用户违反本条规定造成本站被第三人索赔的，用户应全额补偿本站一切费用(包括但不限于各种赔偿费、诉讼代理费及为此支出的其它合理费用)；
+            </p>
+            <p>
+                当第三方认为用户发表或者上传于本站的信息侵犯其权利，并根据《信息网络传播权保护条例》或者相关法律规定向本站发送权利通知书时，用户同意本站可以自行判断决定删除涉嫌侵权信息，除非用户提交书面证据材料排除侵权的可能性，本站将不会自动恢复上述删除的信息；
+            </p>
+        </div>
+        <a href="javascript:;" class="loginbtn colblue">我同意遵守协议</a>
+    </div>
+</div>
+</body>
+</html>

@@ -450,3 +450,13 @@ body{ background: #ececec;}
 .mt10{ margin-top: 10px;}
 .paddingtnone{ padding-top: 0; padding-bottom: 0; margin-top: 20px;}
 .borderbox{ border-bottom: 1px dashed #d6d6d6; margin-top: 30px;}
+
+
+/** */
+label.error {
+    color: red;
+    background: url("../../statics/images/error.png") left no-repeat;
+    font-size: 13px;
+    margin-left: 5px;
+    padding-left: 16px;
+}
