@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>创建用户</title>
+    <link rel="stylesheet" href="../../statics/css/reset.css">
+    <link rel="stylesheet" href="../../statics/css/style.css">
+    <script src="../../statics/js/jquery-1.11.0.min.js"></script>
+    <script src="../../statics/js/jquery.validate.min.js"></script>
+    <script src="../../statics/js/corporate/corp-register-validate.js"></script>
+</head>
+<body>
+    <input type="hidden" id="redisKey" name="redisKey" value="${key}"/>
+	<div class="nav">
+		<div class="container">
+			<h1>
+				<a href="javascript:;"><img src="../../statics/images/logo.png" alt=""></a>
+			</h1>
+			<a href="javascript:;" class="fr">返回首页</a>
+		</div>
+	</div>
+	<div class="container">
+		<div class="tit">
+			<h2>
+                创建用户
+				<span class="fr tel">法人认证服务专线：400-890-098</span>
+			</h2>
+		</div>
+		<div class="pgsbar_legal artrz_pgsbar_legal">
+			<ul>
+				<li class="cur">
+					<em>1</em>
+					<h3>信息认证</h3>
+				</li>
+				<li class="cur">
+					<em>2</em>
+					<h3>创建用户</h3>
+				</li>
+				<li>
+					<em>3</em>
+					<h3>注册成功</h3>
+				</li>
+			</ul>
+		</div>
+		<div class="container_regist logon_c cregist_c legal_cerat">
+            <form id="corporateAccountForm">
+			<ul>
+				<h2>用户名 <b>*</b></h2>
+				<li>
+					<p>
+						<i class="usericon"></i>
+						<input type="text" class="txt username" id="loginNo" name="loginNo" placeholder="4~20个字符，第一位必须为字母，支持数字、字母组合" maxlength="20">
+						<em></em>
+					</p>
+					<span class="warn userwarn"></span>
+				</li>
+                <h2>手机号 <b>*</b></h2>
+                <li>
+                    <p>
+                        <i class="phoneicon"></i>
+                        <input type="text" class="txt phone" id="corporateMobile" name="corporateMobile" placeholder="请输入法定代表人手机号" maxlength="11">
+                        <em></em>
+                    </p>
+                    <span class="warn phonewarn"></span>
+                </li>
+                <li>
+                    <p class="vdcode">
+                        <i class="vdicon"></i>
+                        <input type="text" class="txt vdtxt" placeholder="请输入6位验证码" maxlength="6">
+                        <em></em>
+                        <input type="button" class="get_code" id="btnSendCode" value="获取短信验证码" />
+                    </p>
+                    <span class="warn vdwarn"></span>
+                </li>
+				<h2>密码 <b>*</b><span class="fr">没有手机号？<a href="person_face_green_regist.html">试试绿色通道&gt;&gt;</a></span></h2>
+				<li style="position:relative;">
+					<p>
+						<i class="pwdicon"></i>
+                        <input type="password" class="txt password" placeholder="4-20位字符，必须由数字、字母或符号两种以上组成" id="loginPwd" name="loginPwd">
+                        <em></em>
+					</p>
+					<span class="warn pwdwarn"></span>
+					<span class="slevel">
+						安全级别
+						<span class="colred"></span>
+						<span class="colblue"></span>
+						<span class="colgreen"></span>
+					</span>
+				</li>
+				<li>
+					<p>
+						<i class="rpwdicon"></i>
+						<input type="password" class="txt rpassword" placeholder="请确认输入密码" id="confirmLoginPwd" name="confirmLoginPwd">
+                        <em></em>
+					</p>
+					<span class="warn rpwdwarn"></span>
+				</li>
+                <li><input type="checkbox" id = "showPwd" value="0"><span>显示密码</span></li>
+			</ul>
+			<a href="javascript:void(0);" class="loginbtn colblue mt45" id="corporateAccountSubmit">下一步</a>
+            </form>
+		</div>
+	</div>
+	<div class="bottom"></div>
+</body>
+<script type="text/javascript">
+
+    //短信倒计时
+    var InterValObj; //timer变量，控制时间
+    var count = 60; //间隔函数，1秒执行
+    var curCount;//当前剩余秒数
+    var code = ""; //验证码
+    var codeLength = 6;//验证码长度
+    function sendMessage() {
+        curCount = count;
+        var dealType; //验证方式
+        var uid=$("#uid").val();//用户uid
+        //产生验证码
+        for (var i = 0; i < codeLength; i++) {
+            code += parseInt(Math.random() * 9).toString();
+        }
+        //设置button效果，开始计时
+        $("#btnSendCode").attr("disabled", "true");
+        $("#btnSendCode").val("请在" + curCount + "秒后重新获取");
+        InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+    }
+    //timer处理函数
+    function SetRemainTime() {
+        if (curCount == 0) {
+            window.clearInterval(InterValObj);//停止计时器
+            $("#btnSendCode").removeAttr("disabled");//启用按钮
+            $("#btnSendCode").val("重新发送");
+            code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效
+        }
+        else {
+            curCount--;
+            $("#btnSendCode").val("请在" + curCount + "秒后重新获取");
+        }
+    }
+</script>
+</html>
