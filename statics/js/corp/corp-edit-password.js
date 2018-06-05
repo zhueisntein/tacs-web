@@ -30,9 +30,6 @@ $(function () {
 		}
 	}, "账号不能为空");
 	$("#accountValidateForm").validate({
-			showErrors:function () {
-
-			},
 			errorPlacement: function (error, element) {
 				error.appendTo(element.parent().next());
 			},
@@ -56,11 +53,14 @@ $(function () {
 			},
 			submitHandler:function(){
 				$.ajax({
-				url: jsCtx + "/corp/forgetPsd/checkLegalAccount.do",
+				url: uri + "/corporate/retrieve/checkLegalAccount",
 				type: "POST",
-				data: {legalAccountNo: $("#legalAccount").val(), legalCode: $("#legalCode").val()},
+				data: {legalAccount: $("#legalAccount").val(), legalCode: $("#legalCode").val()},
 				dataType: "json",
 				async: false,
+				xhrFields: {
+					withCredentials: true
+				},
 				success: function (result) {
 					if (result.code == successCode) {
 						$("#forget-step1").hide();
@@ -72,7 +72,7 @@ $(function () {
 					}else{
 						$("#createCodeBtn").click();
 						// 错误处理
-						if(result.code == "BN115") {
+						if(result.code == verifyCode) {
 							$("#legalCode").parent().next().html(errorImgLabel + result.msg);
 						}else{
 							$("#legalAccount").parent().next().html(errorImgLabel + result.msg);
@@ -85,7 +85,7 @@ $(function () {
 	$("#forwardFind").click(function () {
 		$("#forget-step2").hide();
 		$(".pgsbar_t").find("span").eq(1).removeClass("graybg").addClass("redbg");
-		$(".pgsbar_t").find("img").eq(0).attr("src", jsCtxStatic + "/images/pgsbaricon4.png");
+		$(".pgsbar_t").find("img").eq(0).attr("src", uriStatic + "/images/pgsbaricon4.png");
 		$(".pgsbar").find("em").eq(1).addClass("cur");
 		$("#forget-step3").show();
 	});
@@ -112,7 +112,7 @@ $(function () {
 		}
 		sendMessage();
 		$.ajax({
-			url: jsCtx + "/corp/forgetPsd/sendBindMobile.do",
+			url: uri + "/corp/forgetPsd/sendBindMobile",
 			type: "POST",
 			data: {corpId: $("#corpId").val(), legalMobile: $("#corporateMobile").val()},
 			dataType: "json",
@@ -164,7 +164,7 @@ $(function () {
 		}
 
 		$.ajax({
-			url: jsCtx + "/corp/forgetPsd/verifyBindMobile.do",
+			url: uri + "/corp/forgetPsd/verifyBindMobile",
 			type: "POST",
 			data: {corpId: $("#corpId").val(), mobileCode: mobileCode,legalMobile:$("#corporateMobile").val()},
 			dataType: "json",
@@ -174,7 +174,7 @@ $(function () {
 				if (result.code == successCode) {
 					$("#forget-step3").hide();
 					$(".pgsbar_t").find("span").eq(2).removeClass("graybg").addClass("redbg");
-					$(".pgsbar_t").find("img").eq(1).attr("src", jsCtxStatic + "/images/pgsbaricon4.png");
+					$(".pgsbar_t").find("img").eq(1).attr("src", uriStatic + "/images/pgsbaricon4.png");
 					$(".pgsbar").find("em").eq(2).addClass("cur");
 					$("#forget-step4").show();
 					flag = true;
@@ -191,7 +191,7 @@ $(function () {
 	$("#reSelectType").click(function () {
 		$("#forget-step2").show();
 		$(".pgsbar_t").find("span").eq(1).removeClass("redbg").addClass("graybg");
-		$(".pgsbar_t").find("img").eq(0).attr("src", jsCtxStatic + "/images/pgsbaricon3.png");
+		$(".pgsbar_t").find("img").eq(0).attr("src", uriStatic + "/images/pgsbaricon3.png");
 		$(".pgsbar").find("em").eq(1).removeClass("cur");
 		$("#forget-step3").hide();
 	})
@@ -246,7 +246,7 @@ $(function () {
 			var flag = false;
 			var password = $("#newPassword").val().trim();
 			$.ajax({
-				url: jsCtx + "/corp/forgetPsd/updatePassword.do",
+				url: uri + "/corp/forgetPsd/updatePassword",
 				type: "POST",
 				data: {corpId: $("#corpId").val(), password: password, certKey: $("#certKey").val()},
 				dataType: "json",
@@ -256,7 +256,7 @@ $(function () {
 					if (result.code == successCode) {
 						$("#forget-step4").hide();
 						$(".pgsbar_t").find("span").eq(3).removeClass("graybg").addClass("redbg");
-						$(".pgsbar_t").find("img").eq(2).attr("src", jsCtxStatic + "/images/pgsbaricon4.png");
+						$(".pgsbar_t").find("img").eq(2).attr("src", uriStatic + "/images/pgsbaricon4.png");
 						$(".pgsbar").find("em").eq(3).addClass("cur");
 						$("#forget-step5").show();
 						flag = true;
@@ -317,7 +317,7 @@ function goToLogin() {
 function goLogin() {
 	if (countGo == 0) {
 		window.clearInterval(InterValObj);//停止计时器
-		window.location.href=   jsCtx + "/corp/corporateLoginIndex.do?type=corp" ;
+		window.location.href=   uri + "/corp/corporateLoginIndex?type=corp" ;
 	}
 	else {
 		countGo--;

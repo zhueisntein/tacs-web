@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>Document</title>
+    <link rel="stylesheet" href="../../statics/css/reset.css">
+    <link rel="stylesheet" href="../../statics/css/style.css">
+    <script type="text/javascript" src="../../statics/js/jquery/jquery-1.11.0.min.js"></script>
+    <script src="../../statics/js/jquery/jquery.validate.min.js"></script>
+    <script src="../../statics/js/common/constant.js"></script>
+    <script type="text/javascript" src="../../statics/js/passwordEncryption/encrypt.js"></script>
+    <script type="text/javascript" src="../../statics/js/passwordEncryption/jsencrypt.min.js"></script>
+	<script src="../../statics/js/common/ajax.js"></script>
+	<script src="../../statics/js/login/login.js"></script>
+</head>
+
+<body>
+	<div class="nav">
+		<div class="container">
+			<h1>
+				<a href="javascript:;"><img src="../../statics/images/logo.png" alt=""></a>
+			</h1>
+			<span>欢迎登录</span>
+			<a href="javascript:;" class="fr">返回首页</a>
+		</div>
+	</div>
+	<div class="login">
+		<div class="login_con">
+			<i class="bgangle"></i>
+			<div class="login_t">
+
+                        <h2 class="cur">个人用户登录</h2>
+                        <h2   >法人用户登录</h2>
+
+			</div>
+			<div class="logon_c personl cur">
+				<span class="tiplogin">登录支付宝将与该网站共享您的登录名</span>
+				<div class="login_seltype">
+					<a href="javascript:;" class="twocode cur"></a>
+					<a href="javascript:;" class="pccode"></a>
+				</div>
+				<form  id="personRegister" action="" method="">
+				<div class="login_type loginform">
+					<ul>
+						<li>
+							<p>
+								<i class="usericon"></i>
+								<input type="text" class="txt username" id="personName" name="loginNo" onblur="userNameTest()" placeholder="用户名/手机号/身份证">
+								<em id="a"></em>
+							</p>
+							<span class="warn userwarn"></span>
+						</li>
+						<li>
+							<p>
+								<i class="pwdicon"></i>
+								<input type="password" class="txt password" name="userPwd" onblur="passwordVerify()" placeholder="请输入密码"maxlength="16">
+							    <em id="b"></em>
+							</p>
+							<span class="warn pwdwarn"></span>
+						</li>
+						<li>
+				             <p class="vdcode">
+								<i class="vdicon"></i>
+							   <input  class="txt vdtxt" type="text" placeholder="请输入验证码"  id="testCode" maxlength = "4" name="loginCode" onblur="loginCodeTest()"/>
+							    <em id="c"></em>
+							     <span><img onclick="this.src='' + uri+'/servlet/verifyImgCodeServlet?rnd=' + Math.random();" src="" width="77" height="37" class="get_code"/></span>
+						      </p>
+						      <span id="codeError"></span>
+					    </li>				
+					</ul>
+					<div class="bintang">
+						<input type="checkbox" id="bintang"><label for="bintang"> 十天之内免登录</label>
+						<a href="javascript:;" onclick="mmm()" class="fr">忘记密码？</a>
+					</div>
+					<input type="button" class="loginbtn colblue" onclick="personLoginSubmit()" id="loginbtn" value="登录">
+					<span id="loginError"></span>
+					
+					
+					<!--<a href="javascript:;" class="loginbtn colgreen facebtn">人脸识别</a>-->
+				</div>
+			</form>
+				
+		
+				<div class="login_type scan_box">
+					<b>扫码登录</b>
+					<div class="twocode_box">
+						<img src="../../statics/images/loginicon7.png" alt="" class="twocodeimg">
+						<div class="scan_shadow">
+							<img src="../../statics/images/loginicon6.png" alt="">
+						</div>
+					</div>
+					<h4>请使用手机**扫码</h4>
+					<p><a href="javascript:;">使用帮助</a> | <a href="javascript:;">下载手机支付宝</a></p>
+				</div>
+				<div class="tipregist">
+					<span>
+						没有账号？
+						<a href="javascript:;" onclick="ddd()">立即注册账号>></a>
+					</span>
+				</div>
+				<div class="otherlogin">
+					<ul>
+						<li>
+							<a href="javascript:;" class="alipay"></a>
+							<span>支付宝</span>
+						</li>
+					<!--	<li>
+							<a href="javascript:;" class="qq"></a>
+							<span>QQ</span>
+						</li>-->
+						<li>
+							<a href="javascript:;" class="weixin"></a>
+							<span>微信</span>
+						</li>
+					<!--	<li>
+							<a href="javascript:;" class="weibo"></a>
+							<span>微博</span>
+						</li>
+						<li>
+							<a href="javascript:;" class="baidu"></a>
+							<span>百度</span>
+						</li>-->
+					</ul>
+				</div>
+			</div>
+			<div class="logon_c legall">
+                <form id="legalLoginForm">
+                    <div class="login_type loginform">
+                            <ul>
+                                <li>
+                                    <span class="warn " id="loginWarn"></span>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="usericon"></i>
+                                        <input type="text" class="txt lusername" placeholder="用户名/社会统一信用代码" id="legalLoginNo" name="legalLoginNo">
+                                        <em></em>
+                                    </p>
+                                    <span class="warn luserwarn"></span>
+                                </li>
+                                <li>
+                                    <p>
+                                        <i class="pwdicon"></i>
+                                        <input type="password" class="txt lpassword" placeholder="请输入密码" id="legalLoginPwd" name="legalLoginPwd">
+                                        <em></em>
+                                    </p>
+                                    <span class="warn lpwdwarn"></span>
+                                </li>
+                                <li>
+                                    <p class="vdcode">
+                                        <i class="vdicon"></i>
+                                        <input  class="txt vdtxt" type="text" placeholder="请输入验证码"  id="legalCode" name="legalCode" maxlength="4"/>
+                                        <em></em>
+                                        <span><img onclick="this.src='' + uri+'/servlet/verifyImgCodeServlet?rnd=' + Math.random();" src="" width="77" height="37" class="get_code" id="createCodeBtn"/></span>
+                                    </p>
+                                    <span class="warn"></span>
+                                </li>
+                            </ul>
+                            <div class="bintang">
+                                <a href="${ctx}/corporate/forgetPsd.do" class="fr">忘记密码？</a>
+                                <div class="problem_c">
+                                    <p>1、根据浙政办发【2016】152号《关于进一步减轻企业负担降低企业成本的若干意见》文件要求，自2017年1月1日起，浙江省法人单位（含党政机关、社会团体、企事业、农专社四类法人）申领首张法人数字证书免费（含原企业数字证书），同时免除基础性服务费用。</p>
+                                    <p>2、尚未申领证书的法人单位，请登录网上服务大厅申领。</p>
+                                    <p>3、证书使用前请确认已下载安装最新版本“联连客户端”。具体安装使用及问题处理，请关注“联连”微信公众服务号。服务热线400-888-4636， QQ群12790338。</p>
+                                </div>
+                            </div>
+                        <a href="javascript:void(0);" class="loginbtn colblue mt45" id="legalLoginSubmit"  >登录</a>
+                    </div>
+                </form>
+				<div class="tipregist">
+					<span>
+						没有账号？
+						<a href="${ctx}/corporate.do">立即注册账号>></a>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="shadow"></div>
+	<div class="facestep_pop">
+		<h2>
+			人脸识别认证引导
+			<a href="javascript:;" class="close"></a>
+		</h2>
+		<div class="facestep_popc">
+			<dl>
+				<dt><img src="../../statics/images/facestep1.jpg" alt=""></dt>
+				<dd>扫描二维码</dd>
+			</dl>
+			<dl>
+				<dt><img src="../../statics/images/facestep2.jpg" alt=""></dt>
+				<dd>下载或打开<br>政务服务网app</dd>
+			</dl>
+			<dl>
+				<dt><img src="../../statics/images/facestep3.jpg" alt=""></dt>
+				<dd>打开"我的"，<br>点击蓝色区域进入<br>"个人信息设置"</dd>
+			</dl>
+			<dl>
+				<dt><img src="../../statics/images/facestep4.jpg" alt=""></dt>
+				<dd>点击"实名等级"，<br>进入认证通道</dd>
+			</dl>
+			<dl>
+				<dt><img src="../../statics/images/facestep5.jpg" alt=""></dt>
+				<dd><p>点击人脸识别认证，<br>完成高级实名认证，<br>享受更多服务</p></dd>
+			</dl>
+			<i class="bgstep"></i>
+		</div>
+	</div>
+	<div class="digital_shadow">
+		<div class="digital_login">
+			<h2>
+				证书登陆错误提示
+				<a href="javascript:;" class="close"></a>
+			</h2>
+			<p>
+				经检测，您电脑<span class="colred">中联连客户端3.0程序未安装或没有安装成功</span>，请<a href="javascript:;" style=" text-decoration: underline;">点击链接</a>（下载并安装联连客户端）；若已安装请点<span class="colred">电脑开始-程序-汇信科技-联连客户端3.0-升级联连</span>，确保<span class="colred">程序升级到最新</span>，仍无法登录请联系我们<a href="javascript:;">人工客服处理</a>！
+			</p>
+			<a href="javascript:;" class="loginbtn colblue">确定</a>
+		</div>
+	</div>
+	<div class="bottom"></div>
+</body>
+<script type="text/javascript">
+var loginUUID='${loginIdentifying}';
+</script>
+</html>

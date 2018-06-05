@@ -6,9 +6,10 @@
 	<title>创建用户</title>
     <link rel="stylesheet" href="../../statics/css/reset.css">
     <link rel="stylesheet" href="../../statics/css/style.css">
-    <script src="../../statics/js/jquery-1.11.0.min.js"></script>
-    <script src="../../statics/js/jquery.validate.min.js"></script>
-    <script src="../../statics/js/corporate/corp-register-validate.js"></script>
+    <script src="../../statics/js/jquery/jquery-1.11.0.min.js"></script>
+    <script src="../../statics/js/jquery/jquery.validate.min.js"></script>
+    <script src="../../statics/js/common/constant.js"></script>
+    <script src="../../statics/js/corp/corp-register-account.js"></script>
 </head>
 <body>
     <input type="hidden" id="redisKey" name="redisKey" value="${key}"/>
@@ -64,16 +65,25 @@
                     </p>
                     <span class="warn phonewarn"></span>
                 </li>
+				<li>
+					<p class="vdcode">
+						<i class="vdicon"></i>
+						<input  class="txt vdtxt" type="text" placeholder="请输入验证码"  id="legalCode" name="legalCode" maxlength="4"/>
+						<em></em>
+						<span><img onclick="this.src=  uri +  '/servlet/verifyImgCodeServlet?rnd=' + Math.random();" src=  "" width="77" height="37" class="get_code" id="createCodeBtn"/></span>
+					</p>
+					<span class="warn"></span>
+				</li>
                 <li>
                     <p class="vdcode">
                         <i class="vdicon"></i>
-                        <input type="text" class="txt vdtxt" placeholder="请输入6位验证码" maxlength="6">
+                        <input type="text" class="txt vdtxt" placeholder="请输入6位验证码" maxlength="6" id="phoneValidate">
                         <em></em>
                         <input type="button" class="get_code" id="btnSendCode" value="获取短信验证码" />
                     </p>
                     <span class="warn vdwarn"></span>
                 </li>
-				<h2>密码 <b>*</b><span class="fr">没有手机号？<a href="person_face_green_regist.html">试试绿色通道&gt;&gt;</a></span></h2>
+				<h2>密码 <b>*</b></h2>
 				<li style="position:relative;">
 					<p>
 						<i class="pwdicon"></i>

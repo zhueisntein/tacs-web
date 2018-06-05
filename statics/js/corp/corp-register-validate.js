@@ -40,7 +40,7 @@ $(function () {
 			return false;
 		}else {
 			$.ajax({
-				url: jsCtx + "/corp/checkCertificateSno.do",
+				url: uri + "/corporate/register/checkCertificateSno",
 				type: "POST",
 				data: {certificateSno: value},
 				dataType: "json",
@@ -75,7 +75,7 @@ $(function () {
 			return false;
 		}
 		$.ajax({
-			url: jsCtx + "/corp/checkIdCard.do",
+			url: uri + "/corporate/register/checkIdCard",
 			type: "POST",
 			data: {idCard: value},
 			dataType: "json",
@@ -195,13 +195,13 @@ $(function () {
 
 		submitHandler: function () {
 				$.ajax({
-					url: jsCtx + "/corp/checkInformation.do",
+					url: uri + "/corporate/register/checkInformation",
 					type: "POST",
 					data: {
-						corporateType: $("#corporateType").val(),
-						certificateSno: $("#certificateSno").val(),
-						corporateName: $("#corporateName").val(),
-						legalUserName: $("#legalUserName").val(),
+                        corporateType: $("#corporateType").val(),
+                        certificateSno: $("#certificateSno").val(),
+                        name: $("#corporateName").val(),
+                        legalUserName: $("#legalUserName").val(),
 						legalUserCert: $("#legalUserCert").val(),
 						legalCertBeginDate: $("#startDate").val().replace(/-/,"").replace(/-/,""),
 						legalCertEndDate: $("#endDate").val().replace(/-/,"").replace(/-/,""),
@@ -213,7 +213,7 @@ $(function () {
 						if (result.code == successCode) {
 							var key = result.data.key;
 							console.log(key)
-							window.location.href = "/corp/createAccount.do?key=" + key;
+							window.location.href="./corp-register-account.html?key=" + key;
 						}else{
 							$(".dateError").html(errorImgLabel + result.msg)
 						}
@@ -225,246 +225,4 @@ $(function () {
 		}
 	})
 
-	$("#corporateAccountSubmit").click(function () {
-		$("#corporateAccountForm").submit();
-	});
-	$.validator.addMethod("loginNoTest", function (value, element, param) {
-		var content = "";
-		var flag = false;
-		var reg = /^[0-9a-zA-Z_\u3E00-\u9FA5]{4,15}$/;
-		if(!reg.test(value)){
-			content = "用户名称长度不够";
-			$.validator.messages["loginNoTest"] = content;
-			return flag;
-		}
-		$.ajax({
-			url: jsCtx + "/corp/checkLoginNo.do",
-			type: "POST",
-			data: {loginNo: value},
-			dataType: "json",
-			async: false,
-			success: function (result) {
-				if (result.code == successCode) {
-					$.validator.messages["loginNoTest"] = content;
-					flag = true;
-				} else {
-					content = result.msg;
-					$.validator.messages["loginNoTest"] = content;
-				}
-			}
-		})
-		if(flag){
-			$(element).next().show();
-		}else{
-			$(element).next().hide();
-		}
-		return flag;
-	}, "请重新输入");
-	$.validator.addMethod("loginPwdTest", function (value, element, param) {
-		var content = "";
-		var flag = false;
-		var reg = /(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{6,16}$/;
-		if(value.length < 6 || value.length > 16){
-			flag = false;
-			content = "密码长度不符合";
-		}else if(!reg.test(value)){
-			flag = false;
-			content = "密码不符合要求";
-		}else{
-			flag = true;
-		}
-		$.validator.messages.loginPwdTest = content;
-		if(flag){
-			$(element).next().show();
-		}else{
-			$(element).next().hide();
-		}
-		return flag;
-	}, "请重新输入");
-	$.validator.addMethod("confirmLoginPwdTest", function (value, element, param) {
-		var content = "";
-		var flag = false;
-		if(value != $("#loginPwd").val()){
-			content = "两次密码输入不一致";
-		}else{
-			flag = true;
-		}
-		console.log(flag)
-		$.validator.messages.confirmLoginPwdTest = content;
-		if(flag){
-			$(element).next().show();
-		}else{
-			$(element).next().hide();
-		}
-		return flag;
-	}, "请重新输入");
-	$.validator.addMethod("corporateMobileTest", function (value, element, param) {
-		var content = "";
-		var flag = false;
-		var regex = /^1[0-9]{10}/;
-		if (!regex.test(value)) {
-			content = "手机号码不合法";
-		} else {
-			flag = true;
-		}
-		$.validator.messages.corporateMobileTest = content;
-		if(flag){
-			$(element).next().show();
-		}else{
-			$(element).next().hide();
-		}
-		return flag;
-	}, "请重新输入");
-	var phoneFlag = false;
-	/**
-	 * 获取验证码
-	 */
-	$("#btnSendCode").click(function () {
-		var phone = $(".phone").val();
-		var regex = /^1[0-9]{10}/;
-		if (!regex.test(phone)) {
-			$(".phonewarn").html("<img class='regImg' src='/static/images/error.png' /> 手机不合法");
-			return false;
-		} else {
-			$('.logon_c em').eq(1).show();
-			$(".phonewarn").html("");
-		}
-		sendMessage();
-		$.ajax({
-			url: jsCtx + "/corp/" + phone + "/sendCode.do",
-			type: "POST",
-			data: {},
-			dataType: "json",
-			async: false,
-			success: function (result) {
-				console.log(result)
-				if (result.code != successCode) {
-					$('.logon_c em').eq(1).hide();
-					$(".phonewarn").html("<img class='regImg' src='/static/images/error.png' /> " + result.msg);
-				} else {
-
-				}
-			},
-			error: function (error) {
-			}
-		})
-	})
-	/**
-	 * 校验短信验证码
-	 */
-	$(".vdtxt").blur(function () {
-		phoneFlag = false;
-		var phone = $(".phone").val();
-		var code = $(".vdtxt").val();
-		if (code.length == 6 && phone.length == 11) {
-			$.ajax({
-				url: jsCtx + "/corp/" + phone + "/verifyCode.do",
-				type: "POST",
-				data: {code: code},
-				dataType: "json",
-				async: false,
-				success: function (result) {
-					console.log(result)
-					if (result.code == successCode) {
-						$('.logon_c em').eq(2).show();
-						$(".vdwarn").html("");
-						phoneFlag = true;
-					} else {
-						$('.logon_c em').eq(2).hide();
-						$(".vdwarn").html("<img class='regImg' src='/static/images/error.png' /> " + result.msg);
-					}
-				},
-				error: function (error) {
-				}
-			})
-		} else if (phone.length == 11) {
-			$('.logon_c em').eq(2).hide();
-			$(".vdwarn").html("<img class='regImg' src='/static/images/error.png' /> 请填写6位的验证码");
-		}
-	})
-
-	$("#corporateAccountForm").validate({
-		errorPlacement: function (error, element) {
-			error.appendTo(element.parent().next());
-		},
-		rules: {
-
-			loginNo: {
-				required: true,
-				loginNoTest: true
-			},
-			corporateMobile:{
-				required: true,
-				corporateMobileTest: true,
-			},
-			loginPwd: {
-				required: true,
-				loginPwdTest: true,
-			},
-			confirmLoginPwd: {
-				required: true,
-				confirmLoginPwdTest: true,
-				equalTo: "#loginPwd",
-			}
-		},
-		messages: {
-			loginNo: {
-				required: "请输入账号"
-			},
-			corporateMobile: {
-				required: "请输入手机号码",
-			},
-			loginPwd: {
-				required: "请输入密码",
-			},
-			confirmLoginPwd: {
-				required: "请输入密码",
-				equalTo: "两次密码输入不一致"
-			}
-		},
-		submitHandler: function () {
-			if(phoneFlag) {
-				$.ajax({
-					url: jsCtx + "/corp/save.do",
-					type: "POST",
-					data: {
-						key: $("#redisKey").val(),
-						loginNo: $("#loginNo").val(),
-						loginPwd: $("#loginPwd").val(),
-						corporateMobile: $("#corporateMobile").val()
-					},
-					dataType: "json",
-					async: false,
-					success: function (result) {
-						console.log(result)
-						if (result.code == successCode) {
-							window.location.href = "/corp/success.do";
-						}
-					},
-					error: function (error) {
-					}
-				});
-			}else {
-				$('.logon_c em').eq(2).hide();
-				$(".vdwarn").html("<img class='regImg' src='/static/images/error.png' /> 请填写6位的验证码");
-			}
-		}
-	});
-
-	/**
-	 * 显示密码
-	 */
-	$("#showPwd").click(function () {
-		if ($(this).is(':checked')) {
-			$(".password").attr("type", "text");
-			$(".rpassword").attr("type", "text");
-		} else {
-			$(".password").attr("type", "password");
-			$(".rpassword").attr("type", "password");
-		}
-	});
-
 })
-function goPersonRegister () {
-	window.open(jsCtx + "/natural/personRegister.do")
-}

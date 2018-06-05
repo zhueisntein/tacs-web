@@ -4,6 +4,7 @@
 $(function () {
 	/*$.dict("REGEX");
 	$.dicts['REGEX']['PASSWORD'];*/
+    $(".get_code").attr("src",  uri +  '/servlet/verifyImgCodeServlet?rnd=' + Math.random());
 	/**
 	 *  法人登录
 	 */
@@ -71,7 +72,7 @@ $(function () {
 			var legalLoginPwd = $("#legalLoginPwd");
 			var legalCode = $("#legalCode");
 			$.ajax({
-				url: jsCtx + "/corp/login.do",
+				url: jsCtx + "/corporate/login.do",
 				type: "POST",
 				data: {
 					loginNo: legalLoginNo.val(),
@@ -84,7 +85,7 @@ $(function () {
 					$("#createCodeBtn").click();
 					console.log(result)
 					if (result.code == successCode) {
-						//window.location.href = jsCtx + "/corp/userCenter.do";
+						//window.location.href = jsCtx + "/corporate/userCenter.do";
 					}else{
 						$("#loginWarn").html(errorImgLabel + result.msg);
 					}
