@@ -17,7 +17,7 @@
         font-size: 25px;
         height: 42px;
         font-style: italic;
-        letter-spacing: 1px;
+        letter-spacing: 15px;
         color: slateblue;
 		cursor: pointer;
 		-moz-user-select: none;
@@ -81,7 +81,7 @@
 										<i class="imgvdicon"></i>
 										<input type="text" class="txt imgvd" id="t1" onblur="but()" placeholder="请输入验证码"maxlength="4">
 									    <em id="c"></em>
-										<span id="discode" style="font-size: 38px;" onclick="createCode()"></span>
+										<span id="discode" style="font-size: 40px;" onclick="createCode()"></span>
 									</p>
 								    <span class="warn imgvdwarn"></span>
 								</li>
@@ -264,10 +264,6 @@
 		</div>
 	</div>
 	<div class="bottom"></div>	
-	<script type="text/javascript">
-	var UUID='${requestVerify}';
-	</script>
-
 </div>
 	</body>
 </html>

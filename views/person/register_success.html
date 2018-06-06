@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+<title>注册成功</title>
+		<link rel="stylesheet" href="../../statics/css/reset.css" />
+		<link rel="stylesheet" href="../../statics/css/style.css" />
+		<script type="text/javascript" src="../../statics/js/jquery/jquery-1.11.0.min.js" ></script>
+		<script type="text/javascript" src="../../statics/js/passwordEncryption/encrypt.js" ></script>
+		<script type="text/javascript" src="../../statics/js/passwordEncryption/jsencrypt.min.js" ></script>
+		<script type="text/javascript" src="../../statics/My97DatePicker/WdatePicker.js" ></script>
+	    <script type="text/javascript" src="../../statics/js/naturalperson/personRegister.js" ></script>
+	    <script type="text/javascript" src="../../statics/js/common/constant.js"></script>
+</head>
+<body>
+	<div class="nav">
+		<div class="container">
+			<h1>
+				<a href="javascript:;"><img src="../static/images/logo.png" alt=""></a>
+			</h1>
+			<a href="javascript:;" class="fr" onclick="aaa()" >返回首页</a>
+		</div>
+	</div>
+	<div class="container suc_submit">
+		<h2>资料已经提交成功</h2>
+		<p>请您耐心等待核实！立即<a href="javascript:;" onclick="aaa()">前往首页</a></p>
+		<a href="javascript:;" id="text"></a>
+	</div>
+	<div class="bottom"></div>
+</body>
+<script type="text/javascript">
+	var InterValObj; //timer变量，控制时间
+	var count = 3; //间隔函数，1秒执行
+	
+	window.onload=function()//用window的onload事件，窗体加载完毕的时候
+{
+	InterValObj = window.setInterval(createCode, 1000);
+   
+}
+ function createCode(){
+ 	if (count == 0) {    
+		window.clearInterval(InterValObj);//停止计时器
+		window.location.href="../login/login.html";
+	   }
+	   else {
+	   	 $("#text").html(""+ count+" 秒后自动跳转...");
+	    count--;
+	   }
+ }
+ function aaa(){
+	 window.location.href="../login/login.html";
+ }
+</script>
+</html>
